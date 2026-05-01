@@ -1,0 +1,52 @@
+[workspace]
+authors = ["Kevin Mills <millsks@gmail.com>"]
+name = "genai-learning"
+version = "0.1.0"
+description = "Learning Generative AI, RAG, and Agentic AI in Python"
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[dependencies]
+python = ">=3.11,<3.13"
+
+# Core AI libraries
+openai = ">=1.40"
+anthropic = ">=0.34"
+transformers = ">=4.44"
+pytorch = ">=2.4"
+tokenizers = ">=0.19"
+
+# RAG libraries
+langchain = ">=0.3"
+langchain-openai = ">=0.2"
+langchain-community = ">=0.3"
+chromadb = ">=0.5"
+sentence-transformers = ">=3.0"
+
+# Data and utilities
+python-dotenv = ">=1.0"
+rich = ">=13.0"
+pandas = ">=2.2"
+numpy = ">=1.26"
+
+# Web and document loading
+beautifulsoup4 = ">=4.12"
+requests = ">=2.32"
+pypdf = ">=4.0"
+
+[tasks]
+chat = "python src/chatbot.py"
+rag = "python src/rag_app.py"
+agent = "python src/agent.py"
+test = { cmd = "python -m pytest tests/", default-environment = "dev" }
+verify_setup = { cmd = "python src/verify_setup.py", default-environment = "dev" }
+health_dashboard = { cmd = "python src/health_dashboard.py", default-environment = "dev" }
+
+[environments]
+dev = ["dev"]
+
+[feature.dev.dependencies]
+pytest = ">=8.0"
+ipykernel = ">=6.29"
+black = ">=24.0"
+ruff = ">=0.5"

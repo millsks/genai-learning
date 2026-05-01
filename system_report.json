@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-04-30T21:08:34.689474",
+  "python_version": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 17:06:14) [Clang 19.1.7 ]",
+  "platform": "darwin",
+  "gpu": {
+    "available": true,
+    "name": "Apple Silicon (MPS)",
+    "vram_gb": "shared"
+  },
+  "api_connectivity": {
+    "OpenAI": {
+      "reachable": true,
+      "status_code": 401,
+      "latency_ms": 165
+    },
+    "Anthropic": {
+      "reachable": true,
+      "status_code": 405,
+      "latency_ms": 95
+    },
+    "HuggingFace": {
+      "reachable": true,
+      "status_code": 200,
+      "latency_ms": 180
+    }
+  },
+  "recommended_local_models": [
+    "Use APIs or Apple MPS acceleration"
+  ]
+}
