@@ -1,30 +1,40 @@
 {
-  "timestamp": "2026-04-30T21:08:34.689474",
+  "timestamp": "2026-05-01T06:51:53.970031",
   "python_version": "3.12.13 | packaged by conda-forge | (main, Mar  5 2026, 17:06:14) [Clang 19.1.7 ]",
   "platform": "darwin",
   "gpu": {
     "available": true,
     "name": "Apple Silicon (MPS)",
-    "vram_gb": "shared"
+    "vram_gb": "shared",
+    "unified_memory_gb": 24.0
   },
   "api_connectivity": {
     "OpenAI": {
       "reachable": true,
       "status_code": 401,
-      "latency_ms": 165
+      "latency_ms": 205
     },
     "Anthropic": {
       "reachable": true,
       "status_code": 405,
-      "latency_ms": 95
+      "latency_ms": 171
     },
     "HuggingFace": {
       "reachable": true,
       "status_code": 200,
-      "latency_ms": 180
+      "latency_ms": 139
     }
   },
   "recommended_local_models": [
-    "Use APIs or Apple MPS acceleration"
+    "Llama-3-8B (via Ollama/MLX)",
+    "Mistral-7B (via Ollama/MLX)",
+    "Gemma-7B",
+    "Phi-3-mini"
+  ],
+  "local_model_runtimes": [
+    "Ollama",
+    "MLX (Apple-optimized)",
+    "llama.cpp (Metal)",
+    "HuggingFace Transformers (device='mps')"
   ]
 }

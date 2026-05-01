@@ -7,6 +7,15 @@ import sys
 import time
 from datetime import datetime
 
+def get_system_ram_gb():
+    """Return total system RAM in GB."""
+    try:
+        import psutil
+        return round(psutil.virtual_memory().total / (1024**3), 1)
+    except Exception:
+        return None
+
+
 def check_gpu():
     """Check GPU availability and VRAM."""
     try:
@@ -21,7 +30,13 @@ def check_gpu():
                 "cuda_version": torch.version.cuda,
             }
         elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-            return {"available": True, "name": "Apple Silicon (MPS)", "vram_gb": "shared"}
+            ram_gb = get_system_ram_gb()
+            return {
+                "available": True,
+                "name": "Apple Silicon (MPS)",
+                "vram_gb": "shared",
+                "unified_memory_gb": ram_gb,
+            }
         return {"available": False, "name": "CPU only", "vram_gb": 0}
     except Exception as e:
         return {"available": False, "error": str(e)}
@@ -61,7 +76,43 @@ def generate_report():
 
     # Check recommended model sizes based on available resources
     gpu_info = report["gpu"]
-    if gpu_info.get("vram_gb", 0) and isinstance(gpu_info["vram_gb"], (int, float)):
+    if gpu_info.get("name") == "Apple Silicon (MPS)":
+        ram = gpu_info.get("unified_memory_gb") or 0
+        if ram >= 64:
+            report["recommended_local_models"] = [
+                "Llama-3-70B (4-bit via Ollama/MLX)",
+                "Mixtral-8x7B (via Ollama)",
+                "Llama-3-8B (full precision)",
+            ]
+        elif ram >= 32:
+            report["recommended_local_models"] = [
+                "Llama-3-70B (4-bit via Ollama/MLX) — may be slow",
+                "Llama-3-8B (full precision)",
+                "Mistral-7B (full precision)",
+                "Phi-3-medium",
+            ]
+        elif ram >= 16:
+            report["recommended_local_models"] = [
+                "Llama-3-8B (via Ollama/MLX)",
+                "Mistral-7B (via Ollama/MLX)",
+                "Gemma-7B",
+                "Phi-3-mini",
+            ]
+        elif ram >= 8:
+            report["recommended_local_models"] = [
+                "Phi-3-mini (via Ollama/MLX)",
+                "Gemma-2B",
+                "TinyLlama-1.1B",
+                "Llama-3-8B (4-bit, tight fit)",
+            ]
+        else:
+            report["recommended_local_models"] = [
+                "Phi-3-mini (4-bit)",
+                "TinyLlama-1.1B",
+                "Consider using cloud APIs for larger models",
+            ]
+        report["local_model_runtimes"] = ["Ollama", "MLX (Apple-optimized)", "llama.cpp (Metal)", "HuggingFace Transformers (device='mps')"]
+    elif gpu_info.get("vram_gb", 0) and isinstance(gpu_info["vram_gb"], (int, float)):
         vram = gpu_info["vram_gb"]
         if vram >= 24:
             report["recommended_local_models"] = ["Llama-3-70B (4-bit)", "Mistral-Large"]
@@ -72,7 +123,7 @@ def generate_report():
         else:
             report["recommended_local_models"] = ["CPU models only — use APIs instead"]
     else:
-        report["recommended_local_models"] = ["Use APIs or Apple MPS acceleration"]
+        report["recommended_local_models"] = ["CPU models only — use APIs instead"]
 
     # Save report
     with open("system_report.json", "w") as f:
@@ -88,4 +139,3 @@ if __name__ == "__main__":
     report = generate_report()
     console.print(JSON(json.dumps(report, indent=2)))
     console.print(f"\n[green]Report saved to system_report.json[/green]")
-    
