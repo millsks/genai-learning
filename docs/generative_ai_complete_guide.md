@@ -1,4 +1,5 @@
 # The Complete Guide to Generative AI, RAG, and Agentic AI in Python
+
 ## From Novice to Professional
 
 **Last Updated:** May 2026 | **Estimated Reading Time:** 90+ minutes | **Skill Level:** Beginner → Professional
@@ -318,6 +319,7 @@ pixi run python src/verify_setup.py
 **Goal:** Build a CLI tool that checks your entire AI development environment.
 
 **Extend `verify_setup.py` to also:**
+
 1. Check available GPU/CUDA status using `torch.cuda.is_available()`
 2. Estimate available VRAM for local model selection
 3. Test network connectivity to OpenAI and Anthropic APIs
@@ -454,6 +456,7 @@ for token_id in tokens:
 ```
 
 **Output:**
+
 ```
 Text: Generative AI is transforming software development!
 Token IDs: [5765, 1413, 15592, 374, 46890, 3241, 4500, 0]
@@ -703,6 +706,7 @@ if __name__ == "__main__":
 The OpenAI API is the most widely used LLM API. Let's explore it comprehensively.
 
 **Getting your API key:**
+
 1. Go to [platform.openai.com](https://platform.openai.com)
 2. Sign up or log in
 3. Navigate to API Keys → Create new secret key
@@ -1429,12 +1433,14 @@ RAG solves both problems by **retrieving relevant information** from a knowledge
 A RAG system has two phases:
 
 **Phase 1: Indexing (Offline — done once)**
+
 1. **Load** documents (PDFs, web pages, databases, etc.)
 2. **Split** documents into smaller, overlapping chunks
 3. **Embed** each chunk using an embedding model → vectors
 4. **Store** vectors in a vector database
 
 **Phase 2: Query (Online — happens per question)**
+
 1. **Embed** the user's question → query vector
 2. **Search** the vector database for the most similar document chunks
 3. **Augment** the prompt with retrieved chunks as context
