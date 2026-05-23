@@ -157,7 +157,7 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 
 [dependencies]
-python = ">=3.11,<3.13"
+python = ">=3.13,<3.14"
 
 # Core AI libraries
 openai = ">=1.40"
@@ -3469,7 +3469,7 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 
 [dependencies]
-python = ">=3.11,<3.13"
+python = ">=3.13,<3.14"
 
 # LLM Providers
 openai = ">=1.40"
@@ -4272,13 +4272,13 @@ def run_full_evaluation(
 ```toml
 # Minimal LLM project
 [dependencies]
-python = ">=3.11"
+python = ">=3.13"
 openai = ">=1.40"
 python-dotenv = ">=1.0"
 
 # RAG project
 [dependencies]
-python = ">=3.11"
+python = ">=3.13"
 langchain = ">=0.3"
 langchain-openai = ">=0.2"
 chromadb = ">=0.5"
@@ -4286,7 +4286,7 @@ pypdf = ">=4.0"
 
 # Full agent project
 [dependencies]
-python = ">=3.11"
+python = ">=3.13"
 langchain = ">=0.3"
 langgraph = ">=0.2"
 langchain-openai = ">=0.2"
@@ -4295,7 +4295,7 @@ tavily-python = ">=0.4"
 
 # Local model project
 [dependencies]
-python = ">=3.11"
+python = ">=3.13"
 transformers = ">=4.44"
 torch = ">=2.4"
 accelerate = ">=0.33"
